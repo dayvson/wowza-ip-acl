@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="bin" path="src"/>
+	<classpathentry kind="src" path="src-test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/bcprov-ext-jdk15-143.jar"/>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/jid3lib-0.5.4.jar"/>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-ant.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-bootstrap.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-commons-modeler.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-core.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-httpstreamer-cupertinostreaming.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-httpstreamer-smoothstreaming.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-jlayer.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-mediareader-flv.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-mediareader-h264.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-mediareader-mp3.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-mediawriter-flv.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-mediawriter-h264.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-plugin-bwcheck.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-plugin-textchat.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-server.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-stream-file.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-stream-live.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-stream-publish.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-stream-record.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-stream-rtp.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Library/WowzaMediaServer/lib/wms-stream-shoutcast.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Library/WowzaMediaServer/documentation/serverapi"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/bsh-core-2.0b4.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/cglib-2.1_3-src.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/jmock-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/jmock-junit3-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/jmock-junit4-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/jmock-script-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/dayvson/Downloads/jmock-2.5.1/objenesis-1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
