@@ -8,16 +8,15 @@ This module can be integrated with wowza plugin-geoip for by pass geoip block
 = Configure Environment Development
 It is recommended that you use and compile this plugin in eclipse
 But this is not a impediment, you can build with other editors or the command line
-In the conf directory on project, there is an example of configuration and installation of the plugin
+In the {project}/conf directory, there is an example of configuration and installation of the plugin
 
 = Snippet for Application.xml 
 
 <Root>
 	<Application>
-
 		<Modules>
 			<!-- snip -->
-      <!-- Enable module wowza-ip-acl -->
+			<!-- Enable module wowza-ip-acl -->
 			<Module>
 				<Name>wowza-ip-acl</Name>
 				<Description>Ip Access Control List</Description>
@@ -25,24 +24,19 @@ In the conf directory on project, there is an example of configuration and insta
 			</Module>
 			<!-- snip -->
 		</Modules>
-
 		<Properties>
 			<!-- snip -->
-        <!-- Property for list ip is blacklist separete with commas-->
-  		  <Property>
-  		    <Name>blacklist</Name>
-          <Value>100.213.123.123 , 10.10.10.10 , 127.0.0.1</Value>
-  		  </Property>
-  		  
-  		  <!-- Property for list ip is whitelist separete with commas -->
-  		  <Property>
-  		    <Name>whitelist</Name>
-          <Value>200.142.123.13,215.10.123.10, 10.2.10.40</Value>
-  		  </Property>
-     <!-- snip -->
-
-		</Properties>
-
+			<!-- Property for list ip is blacklist separate with commas-->
+			<Property>
+				<Name>blacklist</Name>
+				<Value>100.213.123.123 , 10.10.10.10 , 127.0.0.1</Value>
+			</Property>
+			<!-- Property for list ip is whitelist separate with commas -->
+			<Property>
+				<Name>whitelist</Name>
+				<Value>200.142.123.13,215.10.123.10, 10.2.10.40</Value>
+			</Property>
+	 		<!-- snip -->
+		</Properties>	
 	</Application>
-
 </Root>
