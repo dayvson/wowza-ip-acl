@@ -2,6 +2,8 @@
 This is a server side module for Wowza Media Server 2.1.0+
 allowing you to configure two ip's list white and black separate with commas
 If the client ip are blacklisted it will reject connection or if the client ip are whitelisted it will accept connection
+
+= Support a IP Range 100.200.300.0:100.200.300.255 or 100.200.300.0 100.200.300.255 or host name. ex.(special.dayvson.com or 90.54.80.60)
 This module can be integrated with wowza plugin-geoip for by pass geoip block
 
 
@@ -10,7 +12,7 @@ It is recommended that you use and compile this plugin in eclipse
 But this is not a impediment, you can build with other editors or the command line
 In the {project}/conf directory, there is an example of configuration and installation of the plugin
 
-= Snippet for Application.xml 
+= Usage/Installation in WMS (Snippet for Application.xml) 
 
 <Root>
 	<Application>
@@ -29,12 +31,12 @@ In the {project}/conf directory, there is an example of configuration and instal
 			<!-- Property for list ip is blacklist separate with commas-->
 			<Property>
 				<Name>blacklist</Name>
-				<Value>100.213.123.123 , 10.10.10.10 , 127.0.0.1</Value>
+				<Value>100.200.300.0:100.200.300,127.0.0.1</Value>
 			</Property>
 			<!-- Property for list ip is whitelist separate with commas -->
 			<Property>
 				<Name>whitelist</Name>
-				<Value>200.142.123.13,215.10.123.10, 10.2.10.40</Value>
+				<Value>200.142.123.13, 215.10.123.10, 10.2.10.0 10.2.10.50</Value>
 			</Property>
 	 		<!-- snip -->
 		</Properties>	

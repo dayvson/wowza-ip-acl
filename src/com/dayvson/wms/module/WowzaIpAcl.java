@@ -1,8 +1,6 @@
 package com.dayvson.wms.module;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import socks.InetRange;
 
 import com.wowza.wms.amf.AMFDataList;
 import com.wowza.wms.application.IApplicationInstance;
@@ -10,21 +8,27 @@ import com.wowza.wms.application.WMSProperties;
 import com.wowza.wms.client.IClient;
 import com.wowza.wms.module.ModuleBase;
 import com.wowza.wms.request.RequestFunction;
-
+/**
+ * 
+ * @author dayvson
+ * @email dayvson@gmail.com
+ * 
+ */
 public class WowzaIpAcl extends ModuleBase {
 
-	private List<String> whitelist = new ArrayList<String>();
-	private List<String> blacklist = new ArrayList<String>();
+	private InetRange whitelist = new InetRange();
+	private InetRange blacklist = new InetRange();
+
 	public void onAppStart(IApplicationInstance appInstance) {
 		WMSProperties props = appInstance.getProperties();
 		if(props.containsKey("blacklist")){
-			this.blacklist = new ArrayList<String>( Arrays.asList( props.getPropertyStr("blacklist").toLowerCase().split(",") ) );
+			this.fillBlacklist(props.getPropertyStr("blacklist"));
 		}
 		if(props.containsKey("whitelist")){
-			this.whitelist =new ArrayList<String>( Arrays.asList( props.getPropertyStr("whitelist").toLowerCase().split(",") ) );
+			this.fillWhitelist(props.getPropertyStr("whitelist"));
 		}
 	}
-
+	
 	public void onConnect(IClient client, RequestFunction function, AMFDataList params) {
 		try{
 		String clientIP = client.getIp();
@@ -37,8 +41,8 @@ public class WowzaIpAcl extends ModuleBase {
 			e.printStackTrace();
 		}
 	}
-	public Boolean clientIsWhitelisted(String clientIP)
-	{
+	
+	public Boolean clientIsWhitelisted(String clientIP){
 		Boolean isfree = false;
 		if( this.checkHasIpInList(clientIP, this.whitelist)){
 			isfree = true;
@@ -46,8 +50,8 @@ public class WowzaIpAcl extends ModuleBase {
 		}
 		return isfree;
 	}
-	public Boolean clientIsBlacklisted(String clientIP)
-	{
+	
+	public Boolean clientIsBlacklisted(String clientIP){
 		Boolean isblock = false;
 		if ( this.checkHasIpInList(clientIP, this.blacklist)){
 			isblock = true;
@@ -55,24 +59,38 @@ public class WowzaIpAcl extends ModuleBase {
 		}
 		return isblock;
 	}
-	public Boolean checkHasIpInList(String clientIP, List<String> list){
-		return list.contains(clientIP.trim());	
+	
+	public Boolean checkHasIpInList(String clientIP, InetRange inetRange){
+		return inetRange.contains(clientIP.trim());	
 	}
 
-	public List<String> getWhitelist() {
+	public InetRange getWhitelist() {
 		return whitelist;
 	}
 
-	public void setWhitelist(List<String> whitelist) {
+	public void setWhitelist(InetRange whitelist) {
 		this.whitelist = whitelist;
 	}
 
-	public List<String> getBlacklist() {
+	public InetRange getBlacklist() {
 		return blacklist;
 	}
 
-	public void setBlacklist(List<String> blacklist) {
+	public void setBlacklist(InetRange blacklist) {
 		this.blacklist = blacklist;
+	}
+	
+	private void fillWhitelist(String ips){
+		String[] list = ips.toLowerCase().trim().split(",");
+		for (String item : list) {
+			this.whitelist.add(item);
+		}
+	}
+	private void fillBlacklist(String ips){
+		String[] list = ips.toLowerCase().trim().split(",");
+		for (String item : list) {
+			this.blacklist.add(item);
+		}
 	}
 
 }
