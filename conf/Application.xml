@@ -1,0 +1,39 @@
+<Root>
+	<Application>
+
+		<!-- snip -->
+
+		<Modules>
+
+			<!-- snip -->
+
+			<Module>
+				<Name>wowza-ip-acl</Name>
+				<Description>Ip Access Control List</Description>
+				<Class>com.dayvson.wms.module.WowzaIpAcl</Class>
+			</Module>
+
+			<!-- snip -->
+
+		</Modules>
+
+		<Properties>
+
+			<!-- snip -->
+        <!-- Property for list ip is blacklist separete with commas-->
+  		  <Property>
+  		    <Name>blacklist</Name>
+          <Value>100.213.123.123 , 10.10.10.10 , 127.0.0.1</Value>
+  		  </Property>
+  		  <!-- Property for list ip is whitelist separete with commas -->
+  		  <Property>
+  		    <Name>whitelist</Name>
+          <Value>200.142.123.13,215.10.123.10, 10.2.10.40</Value>
+  		  </Property>
+     <!-- snip -->
+
+		</Properties>
+
+	</Application>
+
+</Root>

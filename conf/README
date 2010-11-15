@@ -1,0 +1,5 @@
+Application.xml
+
+File contains snippets you should add to your Application.xml config.
+
+Snipets cover module loading, and configuration of module
