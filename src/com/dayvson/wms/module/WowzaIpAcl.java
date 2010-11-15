@@ -1,32 +1,40 @@
 package com.dayvson.wms.module;
 
-import com.wowza.wms.amf.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.wowza.wms.amf.AMFDataList;
 import com.wowza.wms.application.IApplicationInstance;
 import com.wowza.wms.application.WMSProperties;
-import com.wowza.wms.client.*;
-import com.wowza.wms.module.*;
-import com.wowza.wms.request.*;
+import com.wowza.wms.client.IClient;
+import com.wowza.wms.module.ModuleBase;
+import com.wowza.wms.request.RequestFunction;
 
 public class WowzaIpAcl extends ModuleBase {
 
-	private String[] whitelist = {};
-	private String[] blacklist = {};
+	private List<String> whitelist = new ArrayList<String>();
+	private List<String> blacklist = new ArrayList<String>();
 	public void onAppStart(IApplicationInstance appInstance) {
 		WMSProperties props = appInstance.getProperties();
 		if(props.containsKey("blacklist")){
-			this.blacklist = props.getPropertyStr("blacklist").toLowerCase().split(",");
+			this.blacklist = new ArrayList<String>( Arrays.asList( props.getPropertyStr("blacklist").toLowerCase().split(",") ) );
 		}
 		if(props.containsKey("whitelist")){
-			this.whitelist = props.getPropertyStr("whitelist").toLowerCase().split(",");
+			this.whitelist =new ArrayList<String>( Arrays.asList( props.getPropertyStr("whitelist").toLowerCase().split(",") ) );
 		}
 	}
 
 	public void onConnect(IClient client, RequestFunction function, AMFDataList params) {
+		try{
 		String clientIP = client.getIp();
-		if (this.clientIsWhitelisted(clientIP) && !this.clientIsBlacklisted(clientIP)){
+		if (this.clientIsWhitelisted(clientIP) || !this.clientIsBlacklisted(clientIP)){
 			client.acceptConnection();
 		}else{
 			client.rejectConnection("The Client IP was rejected because has in blacklist");
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	public Boolean clientIsWhitelisted(String clientIP)
@@ -47,28 +55,24 @@ public class WowzaIpAcl extends ModuleBase {
 		}
 		return isblock;
 	}
-	public Boolean checkHasIpInList(String clientIP, String[] list){
-		Boolean result = false;
-		for (String item : list) {
-			if(clientIP.equalsIgnoreCase(item.trim())){
-				result = true;
-			}
-		}
-		return result;
+	public Boolean checkHasIpInList(String clientIP, List<String> list){
+		return list.contains(clientIP.trim());	
 	}
-	public String[] getWhitelist() {
+
+	public List<String> getWhitelist() {
 		return whitelist;
 	}
 
-	public void setWhitelist(String[] whitelist) {
+	public void setWhitelist(List<String> whitelist) {
 		this.whitelist = whitelist;
 	}
 
-	public String[] getBlacklist() {
+	public List<String> getBlacklist() {
 		return blacklist;
 	}
 
-	public void setBlacklist(String[] blacklist) {
+	public void setBlacklist(List<String> blacklist) {
 		this.blacklist = blacklist;
 	}
+
 }
