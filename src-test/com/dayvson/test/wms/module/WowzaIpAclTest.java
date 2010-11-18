@@ -2,13 +2,24 @@ package com.dayvson.test.wms.module;
 
 import junit.framework.TestCase;
 
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import socks.InetRange;
 
 import com.dayvson.wms.module.WowzaIpAcl;
+import com.wowza.wms.amf.AMFDataList;
+import com.wowza.wms.application.IApplicationInstance;
+import com.wowza.wms.application.WMSProperties;
+import com.wowza.wms.client.IClient;
+import com.wowza.wms.request.RequestFunction;
 
 /**
  * 
@@ -16,9 +27,15 @@ import com.dayvson.wms.module.WowzaIpAcl;
  * @email dayvson@gmail.com
  * 
  */
+@RunWith(JMock.class)
 public class WowzaIpAclTest extends TestCase {
 	private InetRange blacklist;
 	private InetRange whitelist;
+	
+	private Mockery context = new JUnit4Mockery() {{
+		setImposteriser(ClassImposteriser.INSTANCE);
+	}};
+	
 	@Before
 	public void setUp() throws Exception {
 		blacklist = new InetRange();
@@ -33,60 +50,136 @@ public class WowzaIpAclTest extends TestCase {
 		blacklist = null;
 		whitelist = null;
 	}
+	
 	@Test
-	public final void testFindIp(){
-		InetRange range = new InetRange();
-		range.add("10.10.10.10");
-		range.add("127.127.123.123");
-		assertEquals(true , range.contains("127.127.123.123"));
-		assertEquals(true , range.contains("10.10.10.10"));
+	public void shouldPopulateBlackListWhenWowzaHasABlackList() {
+		WowzaIpAcl w = new WowzaIpAcl();
+		final String ips = "1.2.3.4,5.6.7.8";
+		final IApplicationInstance appInstance = context.mock(IApplicationInstance.class);
+		final WMSProperties prop = context.mock(WMSProperties.class);
+		
+		context.checking(new Expectations() {{
+			oneOf(appInstance).getProperties(); will(returnValue(prop));
+			oneOf(prop).containsKey("blacklist"); will(returnValue(true));
+			oneOf(prop).containsKey("whitelist"); will(returnValue(false));
+			oneOf(prop).getPropertyStr("blacklist"); will(returnValue(ips));
+		}});
+		
+		w.onAppStart(appInstance);
+		InetRange blackList = w.getBlacklist();
+		
+		assertTrue(blackList.contains("1.2.3.4"));
+		assertTrue(blackList.contains("5.6.7.8"));
 	}
+	
 	@Test
-	public final void testContainsRangeIp(){
-		InetRange range = new InetRange();
-		range.add("127.0.0.1 127.0.0.10");
-		range.add("100.200.300.0:100.200.300.255");
-		assertEquals(true , range.contains("127.0.0.1"));
-		assertEquals(true , range.contains("127.0.0.7"));
-		assertEquals(true , range.contains("127.0.0.10"));
-		assertEquals(true , range.contains("100.200.300.155"));
+	public void shouldPopulateWhiteListWhenWowzaHasAWhiteList() {
+		WowzaIpAcl w = new WowzaIpAcl();
+		final String ips = "1.2.3.4,5.6.7.8";
+		final IApplicationInstance appInstance = context.mock(IApplicationInstance.class);
+		final WMSProperties prop = context.mock(WMSProperties.class);
+		
+		context.checking(new Expectations() {{
+			oneOf(appInstance).getProperties(); will(returnValue(prop));
+			oneOf(prop).containsKey("blacklist"); will(returnValue(false));
+			oneOf(prop).containsKey("whitelist"); will(returnValue(true));
+			oneOf(prop).getPropertyStr("whitelist"); will(returnValue(ips));
+		}});
+		
+		w.onAppStart(appInstance);
+		InetRange whiteList = w.getWhitelist();
+		
+		assertTrue(whiteList.contains("1.2.3.4"));
+		assertTrue(whiteList.contains("5.6.7.8"));
 	}
+	
+	
 	@Test
-	public final void testChecheckHasIpInList() {
-		String clientIP = "127.0.0.1";
-
-		WowzaIpAcl restIp = new WowzaIpAcl();
-		assertEquals(Boolean.TRUE, restIp.checkHasIpInList(clientIP, whitelist));
-		assertEquals(Boolean.FALSE, restIp.checkHasIpInList(clientIP, blacklist));
+	public void shouldNotPopulateBlackListWhenWowzaDoesNotHaveABlackList() {
+		WowzaIpAcl w = new WowzaIpAcl();
+		final IApplicationInstance appInstance = context.mock(IApplicationInstance.class);
+		final WMSProperties prop = context.mock(WMSProperties.class);
+		
+		context.checking(new Expectations() {{
+			oneOf(appInstance).getProperties(); will(returnValue(prop));
+			oneOf(prop).containsKey("blacklist"); will(returnValue(false));
+			oneOf(prop).containsKey("whitelist"); will(returnValue(false));
+		}});
+		
+		w.onAppStart(appInstance);
+		InetRange blackList = w.getBlacklist();
+		
+		assertTrue(blackList.getAll().length == 0);
 	}
+	
 	@Test
-	public final void testClientIsBlacklisted() {
-		WowzaIpAcl rest = new WowzaIpAcl();
-		rest.setBlacklist(blacklist);
-		assertEquals(new Boolean(true), rest.clientIsBlacklisted("127.127.127.1"));
-		assertEquals(new Boolean(false), rest.clientIsBlacklisted("1.1.1.1"));	
+	public void shouldNotPopulateWhiteListWhenWowzaDoesNotHaveAWhiteList() {
+		WowzaIpAcl w = new WowzaIpAcl();
+		final IApplicationInstance appInstance = context.mock(IApplicationInstance.class);
+		final WMSProperties prop = context.mock(WMSProperties.class);
+		
+		context.checking(new Expectations() {{
+			oneOf(appInstance).getProperties(); will(returnValue(prop));
+			oneOf(prop).containsKey("blacklist"); will(returnValue(false));
+			oneOf(prop).containsKey("whitelist"); will(returnValue(false));
+		}});
+		
+		w.onAppStart(appInstance);
+		InetRange whiteList = w.getWhitelist();
+		
+		assertTrue(whiteList.getAll().length == 0);
 	}
+	
 	@Test
-	public final void testClientIsWhitelisted() {
-		WowzaIpAcl rest = new WowzaIpAcl();
-		rest.setWhitelist(whitelist);
-		assertEquals(new Boolean(true), rest.clientIsWhitelisted("127.0.0.1"));
-		assertEquals(new Boolean(false), rest.clientIsWhitelisted("1.1.1.1"));	
+	public void shouldAcceptConnectionWhenClientIsOnTheWowzasWhiteList() {
+		final IClient client = context.mock(IClient.class);
+		final RequestFunction function = context.mock(RequestFunction.class);
+		final AMFDataList params = context.mock(AMFDataList.class);
+		final String clientIp = "127.0.0.1";
+		
+		context.checking(new Expectations() {{
+			oneOf(client).getIp(); will(returnValue(clientIp));
+			oneOf(client).acceptConnection();
+		}});
+		
+		WowzaIpAcl w = new WowzaIpAcl();
+		w.setWhitelist(whitelist);
+		w.onConnect(client, function, params);
 	}
+	
 	@Test
-	public final void testGetSetBlacklist(){
-		WowzaIpAcl wow = new WowzaIpAcl();
-		InetRange black = new InetRange();
-		black.add("item-blacklist");
-		wow.setBlacklist(black);
-		assertEquals(black.getAll().length, wow.getBlacklist().getAll().length);
+	public void shouldAcceptConnectionWhenClientIsNotOnTheWowzasWhiteListNorBlackList() {
+		final IClient client = context.mock(IClient.class);
+		final RequestFunction function = context.mock(RequestFunction.class);
+		final AMFDataList params = context.mock(AMFDataList.class);
+		final String clientIp = "6.6.6.6";
+		
+		context.checking(new Expectations() {{
+			oneOf(client).getIp(); will(returnValue(clientIp));
+			oneOf(client).acceptConnection();
+		}});
+		
+		WowzaIpAcl w = new WowzaIpAcl();
+		w.setWhitelist(whitelist);
+		w.setBlacklist(blacklist);
+		w.onConnect(client, function, params);
 	}
+	
 	@Test
-	public final void testGetSetWhitelist(){
-		WowzaIpAcl wow = new WowzaIpAcl();
-		InetRange white = new InetRange();
-		white.add("item-whitelist");
-		wow.setWhitelist(white);
-		assertEquals(white.getAll().length, wow.getWhitelist().getAll().length);
+	public void shouldRejectConnectionWhenClientIsNotOnTheWowzasWhiteListAndItIsOnItsBlackList() {
+		final IClient client = context.mock(IClient.class);
+		final RequestFunction function = context.mock(RequestFunction.class);
+		final AMFDataList params = context.mock(AMFDataList.class);
+		final String clientIp = "127.127.127.1";
+		
+		context.checking(new Expectations() {{
+			oneOf(client).getIp(); will(returnValue(clientIp));
+			oneOf(client).rejectConnection("The Client IP was rejected because has in blacklist");
+		}});
+		
+		WowzaIpAcl w = new WowzaIpAcl();
+		w.setWhitelist(whitelist);
+		w.setBlacklist(blacklist);
+		w.onConnect(client, function, params);
 	}
 }
