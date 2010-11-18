@@ -83,13 +83,13 @@ public class WowzaIpAcl extends ModuleBase {
 	private void fillWhitelist(String ips){
 		String[] list = ips.toLowerCase().trim().split(",");
 		for (String item : list) {
-			this.whitelist.add(item);
+			this.whitelist.add(item.trim());
 		}
 	}
 	private void fillBlacklist(String ips){
 		String[] list = ips.toLowerCase().trim().split(",");
 		for (String item : list) {
-			this.blacklist.add(item);
+			this.blacklist.add(item.trim());
 		}
 	}
 

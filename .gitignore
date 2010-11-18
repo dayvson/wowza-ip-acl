@@ -1,1 +1,4 @@
 bin/*
+build/*
+junit/*
+.DS_STORE
