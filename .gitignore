@@ -1,4 +1,5 @@
 bin/*
+wowza-ip-acl.jar
 build/*
 junit/*
 .DS_STORE
