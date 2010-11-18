@@ -3,7 +3,6 @@
 	<classpathentry kind="src" output="bin" path="src"/>
 	<classpathentry kind="src" path="src-test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/bcprov-ext-jdk15-143.jar"/>
 	<classpathentry kind="lib" path="lib/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest-core-1.1.jar"/>
@@ -14,27 +13,8 @@
 	<classpathentry kind="lib" path="lib/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="lib/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/wms-ant.jar"/>
-	<classpathentry kind="lib" path="lib/wms-bootstrap.jar"/>
-	<classpathentry kind="lib" path="lib/wms-commons-modeler.jar"/>
 	<classpathentry kind="lib" path="lib/wms-core.jar"/>
-	<classpathentry kind="lib" path="lib/wms-httpstreamer-cupertinostreaming.jar"/>
-	<classpathentry kind="lib" path="lib/wms-httpstreamer-smoothstreaming.jar"/>
-	<classpathentry kind="lib" path="lib/wms-jlayer.jar"/>
-	<classpathentry kind="lib" path="lib/wms-mediareader-flv.jar"/>
-	<classpathentry kind="lib" path="lib/wms-mediareader-h264.jar"/>
-	<classpathentry kind="lib" path="lib/wms-mediareader-mp3.jar"/>
-	<classpathentry kind="lib" path="lib/wms-mediawriter-flv.jar"/>
-	<classpathentry kind="lib" path="lib/wms-mediawriter-h264.jar"/>
-	<classpathentry kind="lib" path="lib/wms-plugin-bwcheck.jar"/>
-	<classpathentry kind="lib" path="lib/wms-plugin-textchat.jar"/>
 	<classpathentry kind="lib" path="lib/wms-server.jar"/>
-	<classpathentry kind="lib" path="lib/wms-stream-file.jar"/>
-	<classpathentry kind="lib" path="lib/wms-stream-live.jar"/>
 	<classpathentry kind="lib" path="lib/wms-stream-publish.jar"/>
-	<classpathentry kind="lib" path="lib/wms-stream-record.jar"/>
-	<classpathentry kind="lib" path="lib/wms-stream-rtp.jar"/>
-	<classpathentry kind="lib" path="lib/wms-stream-shoutcast.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
