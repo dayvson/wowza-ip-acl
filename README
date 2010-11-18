@@ -1,4 +1,4 @@
-= Wowza IP Control Access List
+= Wowza IP Control Access List (blacklist and whitelist)
 This is a server side module for Wowza Media Server 2.1.0+
 allowing you to configure two ip's list white and black separate with commas
 If the client ip are blacklisted it will reject connection or if the client ip are whitelisted it will accept connection
@@ -12,6 +12,20 @@ It is recommended that you use and compile this plugin in eclipse
 But this is not a impediment, you can build with other editors or the command line
 In the {project}/conf directory, there is an example of configuration and installation of the plugin
 
+= Run, Tests, Compile and Distribute JAR
+This project contains all external jars necessary for compile wowza-ip-acl.jar
+Use ant target release-distribute for compile distribute version. 
+The ant target create a directory dist and copy the jar for that place
+
+  The ant targets list: 
+    init                  => Create dir's build|dist|junit
+    clean,                => Remove dir's build|dist|junit
+    compile,              => Compile classes in the package src and src-test
+    runTests,             => Run all unit tests
+    junitreport,          => Generate JUnit Reports from tests
+    buildClientJar,       => Copy to wowza library dir path, run all tests and generate junit report
+    release-distribute    => Generate compile final version of project
+    
 = Usage/Installation in WMS (Snippet for Application.xml) 
 
 <Root>
