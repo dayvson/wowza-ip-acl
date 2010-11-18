@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir=".." default="buildClientJar" name="wowza-ip-acl">
+<project basedir="." default="buildClientJar" name="wowza-ip-acl">
 	<!-- CONFIGURE PROJECT -->
-    <property name="build.dir" value="build" />
+    <property name="build.dir" value="build/" />
+	<property name="dist.dir" value="dist/" />
     <property name="src.dir" value="src" />
     <property name="src.unit.tests.dir" value="src-test" />
     <property name="junit.output.dir" value="junit" />
@@ -9,7 +10,7 @@
     <property name="target" value="1.6" />
     <property name="source" value="1.6" />
     <property name="client.jar.name" value="wowza-ip-acl.jar" />
-
+	<property name="wowza.lib.dir" value="/Library/WowzaMediaServer/lib"/>
     <path id="wowza-ip-acl.classpath">
         <pathelement location="${build.dir}" />
         <pathelement location="lib/wms-core.jar" />
@@ -37,10 +38,12 @@
 
     <target name="init">
         <mkdir dir="${build.dir}" />
+    	<mkdir dir="${dist.dir}" />
     	<mkdir dir="${junit.output.dir}" />
     </target>
 
     <target name="clean">
+    	<delete dir="${dist.dir}" />
         <delete dir="${build.dir}" />
     	<delete dir="${junit.output.dir}" />
     </target>
@@ -76,6 +79,12 @@
     </target>
 
     <target name="buildClientJar" depends="runTests">
-        <jar destfile="${client.jar.name}" basedir="${build.dir}" excludes="**/**Test.class"></jar>
+        <jar destfile="${build.dir}${client.jar.name}" basedir="${build.dir}" excludes="**/**Test.class"></jar>
+    	<jar destfile="${wowza.lib.dir}/${client.jar.name}" basedir="${build.dir}" excludes="**/**Test.class"></jar>
+    </target>
+	
+	 <target name="release-distribute" depends="compile">
+        <jar destfile="${dist.dir}${client.jar.name}" basedir="${build.dir}" excludes="**/**Test.class"></jar>
     </target>
 </project>
+
