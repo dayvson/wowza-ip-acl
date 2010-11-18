@@ -1,14 +1,81 @@
-<?xml version="1.0"?>
-<project name="wowza-ip-acl" default="jar" basedir="..">
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." default="buildClientJar" name="wowza-ip-acl">
 	<!-- CONFIGURE PROJECT -->
-	<property name="wowza.lib.dir" value="/Library/WowzaMediaServer/lib"/>
-	<property name="jar.filename" value="wowza-ip-acl.jar"/>
-	<property name="core.build.dir" value="bin"/>
-	<!-- COMPILE PROJECT AND SEND TO WOWZA LIB PATH -->
-	<target name="jar">
-		<jar jarfile="${wowza.lib.dir}/${jar.filename}">
-			<fileset dir="${core.build.dir}"/>
-		</jar>
-	</target>
+    <property name="build.dir" value="build" />
+    <property name="src.dir" value="src" />
+    <property name="src.unit.tests.dir" value="src-test" />
+    <property name="junit.output.dir" value="junit" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="target" value="1.6" />
+    <property name="source" value="1.6" />
+    <property name="client.jar.name" value="wowza-ip-acl.jar" />
 
+    <path id="wowza-ip-acl.classpath">
+        <pathelement location="${build.dir}" />
+        <pathelement location="lib/wms-core.jar" />
+    	<pathelement location="lib/wms-server.jar" />
+    	<pathelement location="lib/wms-stream-publish.jar" />
+		<pathelement location="lib/log4j-1.2.15.jar" />
+    </path>
+
+    <path id="wowza-ip-acl.tests.classpath">
+        <pathelement location="${build.dir}" />
+        <pathelement location="lib/wms-core.jar" />
+    	<pathelement location="lib/wms-server.jar" />
+    	<pathelement location="lib/log4j-1.2.15.jar" />
+    	<pathelement location="lib/wms-stream-publish.jar" />
+        <pathelement location="lib/cglib-nodep-2.1_3.jar" />
+    	<pathelement location="lib/commons-lang-2.4.jar" />
+        <pathelement location="lib/hamcrest-core-1.1.jar" />
+        <pathelement location="lib/hamcrest-library-1.1.jar" />
+        <pathelement location="lib/jmock-2.5.1.jar" />
+        <pathelement location="lib/jmock-junit4-2.5.1.jar" />
+        <pathelement location="lib/jmock-legacy-2.5.1.jar" />
+        <pathelement location="lib/junit-4.8.2.jar" />
+        <pathelement location="lib/objenesis-1.0.jar" />
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.dir}" />
+    	<mkdir dir="${junit.output.dir}" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    	<delete dir="${junit.output.dir}" />
+    </target>
+
+    <target name="compile" depends="clean,init">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${build.dir}" source="${source}" target="${target}">
+            <src path="${src.dir}" />
+            <classpath refid="wowza-ip-acl.classpath" />
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${build.dir}" source="${source}" target="${target}">
+            <src path="${src.unit.tests.dir}" />
+            <classpath refid="wowza-ip-acl.tests.classpath" />
+        </javac>
+    </target>
+
+    <target name="runTests" depends="compile">
+        <mkdir dir="${junit.output.dir}" />
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml" />
+            <test name="com.dayvson.test.wms.module.WowzaIpAclTest" todir="${junit.output.dir}" />
+            <classpath refid="wowza-ip-acl.tests.classpath" />
+        </junit>
+        <antcall target="junitreport" />
+    </target>
+
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}" />
+        </junitreport>
+    </target>
+
+    <target name="buildClientJar" depends="runTests">
+        <jar destfile="${client.jar.name}" basedir="${build.dir}" excludes="**/**Test.class"></jar>
+    </target>
 </project>
